@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-latest.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-database.js"></script>
+
+    <title>Welcome to Firebase Hosting</title>
+    <script>
+
+
+
+  $(document).ready(()=>{
+
+    function joinCall(){
+      $.ajax({
+        url: "https://us-central1-ceobootcampfinal.cloudfunctions.net/join", // 클라이언트가 요청을 보낼 서버의 URL 주소
+        type: "POST",
+        data: {id:$("#idvalue").val(), pwd:$("#pwdvalue").val()},
+        dataType: "json"                         // 서버에서 보내줄 데이터의 타입
+    })
+    .done(function(json) {
+
+    });
+
+    }
+
+
+    function loginCall(){
+      $.ajax({
+        url: "https://us-central1-ceobootcampfinal.cloudfunctions.net/login", // 클라이언트가 요청을 보낼 서버의 URL 주소
+        type: "POST",
+        data: {id:$("#idvalue").val(), pwd:$("#pwdvalue").val()},
+        dataType: "json"                         // 서버에서 보내줄 데이터의 타입
+    })
+    .done(function(json) {
+      {
+        if(json["result_code"]==1){
+          loadMsgs();
+
+        }else if(json["result_code"]==2){
+          alert(json["result"]);
+
+        }else if(json["result_code"]==3){
+          alert(json["result"]);
+
+        }
+
+
+    });
+
+    }
+
+
+
+
+    $("#join").on("click",()=>{
+      joinCall();
+    })
+
+    $("#login").on("click",()=>{
+      loginCall();
+    })
+})
+
+
+
+</script>
+
+  </head>
+  <body>
+    <input type="text" id="idvalue" placeholder="아이디">
+    <input type="text" id="pwdvalue" placeholder="패스워드">
+
+    <button id="login"> 로그인 </button>
+    <div id="chatList">
+      채팅내용
+
+    </div>
+  </body>
+</html>
